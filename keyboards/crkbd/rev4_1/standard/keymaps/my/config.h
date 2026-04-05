@@ -23,8 +23,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //#define USE_MATRIX_I2C
 
 //#define QUICK_TAP_TERM 0
-#define RETRO_TAPPING
 // #define CHORDAL_HOLD
+#define TAPPING_TERM 250
+#define RETRO_TAPPING
 #define HOLD_ON_OTHER_KEY_PRESS_PER_KEY
 
 #define MOUSEKEY_MAX_SPEED 3
