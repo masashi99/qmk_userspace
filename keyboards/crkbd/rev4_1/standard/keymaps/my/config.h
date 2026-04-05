@@ -28,8 +28,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define RETRO_TAPPING
 #define HOLD_ON_OTHER_KEY_PRESS_PER_KEY
 
-#define MOUSEKEY_MAX_SPEED 3
+#define MOUSEKEY_MAX_SPEED 4
 #define MOUSEKEY_INTERVAL 16
+#define MOUSEKEY_MOVE_DELTA 4
 
 #ifdef RGBLIGHT_ENABLE
     #define RGBLIGHT_EFFECT_BREATHING
