@@ -59,7 +59,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     [3] = LAYOUT_split_3x6_3_ex2(
   //,-------------------------------------------------------------+--------.  ,--------+-------------------------------------------------------------.
-      QK_BOOT, KC_BRID, KC_BRIU, KC_VOLD, KC_VOLU, KC_MUTE, _______,    _______, MS_WHLL, MS_WHLD, MS_WHLU, MS_WHLR, _______, _______,
+      QK_BOOT, KC_BRID, KC_BRIU, KC_VOLD, KC_VOLU, KC_MUTE, _______,    _______, MS_WHLL, MS_WHLU, MS_WHLD, MS_WHLR, _______, _______,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------+--------|
       _______, _______, MS_BTN3, MS_BTN2, MS_BTN1, _______, _______,    _______, MS_LEFT, MS_DOWN, MS_UP,   MS_RGHT, _______, _______,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------+--------|
@@ -76,8 +76,6 @@ bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record) {
         case LGUI_T(KC_LNG2):
         case LSFT_T(KC_ESC):
         case LCTL_T(KC_BSPC):
-        case LCS_T(KC_B):
-        case RCS_T(KC_N):
         case LT(3, KC_ENT):
         case LT(1, KC_SPC):
         case LT(2, KC_LNG1):
@@ -87,13 +85,13 @@ bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record) {
     }
 }
 
-const char chordal_hold_layout[MATRIX_ROWS][MATRIX_COLS] PROGMEM =
-    LAYOUT_split_3x6_3_ex2(
-        'L', 'L', 'L', 'L', 'L', 'L', 'L',  'R', 'R', 'R', 'R', 'R', 'R', 'R',
-        'L', 'L', 'L', 'L', 'L', 'L', 'L',  'R', 'R', 'R', 'R', 'R', 'R', 'R',
-        'L', 'L', 'L', 'L', 'L', 'L',            'R', 'R', 'R', 'R', 'R', 'R',
-                       '*', '*', '*',  '*', '*', '*'
-    );
+// const char chordal_hold_layout[MATRIX_ROWS][MATRIX_COLS] PROGMEM =
+//     LAYOUT_split_3x6_3_ex2(
+//         'L', 'L', 'L', 'L', 'L', 'L', 'L',  'R', 'R', 'R', 'R', 'R', 'R', 'R',
+//         'L', 'L', 'L', 'L', 'L', 'L', 'L',  'R', 'R', 'R', 'R', 'R', 'R', 'R',
+//         'L', 'L', 'L', 'L', 'L', 'L',            'R', 'R', 'R', 'R', 'R', 'R',
+//                        '*', '*', '*',  '*', '*', '*'
+//     );
 
 #ifdef ENCODER_MAP_ENABLE
 const uint16_t PROGMEM encoder_map[][NUM_ENCODERS][NUM_DIRECTIONS] = {

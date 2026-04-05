@@ -24,8 +24,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 //#define QUICK_TAP_TERM 0
 #define RETRO_TAPPING
-#define CHORDAL_HOLD
+// #define CHORDAL_HOLD
 #define HOLD_ON_OTHER_KEY_PRESS_PER_KEY
+
+#define MOUSEKEY_MAX_SPEED 3
+#define MOUSEKEY_INTERVAL 16
 
 #ifdef RGBLIGHT_ENABLE
     #define RGBLIGHT_EFFECT_BREATHING
