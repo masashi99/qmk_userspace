@@ -18,6 +18,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include QMK_KEYBOARD_H
 
+enum custom_keycodes {
+    CMD_TAB = SAFE_RANGE,
+    CTRL_TAB,
+};
+
+static bool cmd_tab_lgui_held = false;
+static bool ctrl_tab_lctl_held = false;
+
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [0] = LAYOUT_split_3x6_3_ex2(
         //,--------------------------------------------------------------------------------------+--------.  ,--------+-------------------------------------------------------------------------------------------------.
@@ -39,7 +47,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         //|--------+--------+--------+--------+--------+--------+-------+--------+--------+--------+------|  |--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+-------|
         XXXXXXX, LSFT_T(KC_GRV), LGUI_T(KC_LBRC), LCTL_T(KC_LBRC), LALT_T(KC_9), LCS_T(KC_COMM),                                  RCS_T(KC_DOT), RALT_T(KC_0),RCTL_T(KC_RBRC),RGUI_T(KC_RBRC),RSFT_T(KC_SCLN), XXXXXXX,
         //|--------+--------+--------+--------+--------+--------+-------+--------+--------+--------+------|  |--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+-------|
-                                              _______,    KC_TAB,    KC_DEL,                                       _______,       _______,       _______
+                                              CTRL_TAB,    CMD_TAB,   KC_DEL,                                       _______,       _______,       _______
         //                              `-----------------------------------------------------------------'  `-----------------------------------------------------------------'
     ),
 
@@ -137,6 +145,46 @@ static uint16_t get_shifted_modtap_tap_keycode(uint16_t keycode) {
 }
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
+        // layer 1 を維持している間だけ Ctrl を握り、Tab を複数回送れるようにする。
+        case CTRL_TAB:
+            if (record->event.pressed) {
+                if (!ctrl_tab_lctl_held) {
+                    register_code(KC_LCTL);
+                    ctrl_tab_lctl_held = true;
+                }
+                register_code(KC_TAB);
+            } else {
+                unregister_code(KC_TAB);
+            }
+            return false;
+        // layer 1 を維持している間だけ GUI を握り、Cmd+Tab を継続できるようにする。
+        case CMD_TAB:
+            if (record->event.pressed) {
+                if (!cmd_tab_lgui_held) {
+                    register_code(KC_LGUI);
+                    cmd_tab_lgui_held = true;
+                }
+                register_code(KC_TAB);
+            } else {
+                unregister_code(KC_TAB);
+            }
+            return false;
+        // レイヤーキーを離したら、CTRL_TAB / CMD_TAB が掴んだ modifier を解放する。
+        case LT(1, KC_SPC):
+            if (!record->event.pressed) {
+                if (ctrl_tab_lctl_held) {
+                    unregister_code(KC_LCTL);
+                    ctrl_tab_lctl_held = false;
+                }
+                if (cmd_tab_lgui_held) {
+                    unregister_code(KC_LGUI);
+                    cmd_tab_lgui_held = false;
+                }
+            }
+            break;
+    }
+
     const int8_t shifted_modtap_index = get_shifted_modtap_index(keycode);
 
     if (shifted_modtap_index >= 0) {
