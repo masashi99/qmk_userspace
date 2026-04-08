@@ -14,3 +14,6 @@
 compile_commands.json
 .clangd/
 .cache/
+
+# Private keymap data
+keyboards/crkbd/rev4_1/standard/keymaps/mini/private.h

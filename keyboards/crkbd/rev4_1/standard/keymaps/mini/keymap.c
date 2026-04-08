@@ -20,6 +20,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "custom_keycodes.h"
 #include "layer1_tab.h"
+#include "private.h"
 #include "shifted_modtap.h"
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -65,7 +66,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         //|--------+--------+--------+--------+--------+--------+-------+--------+--------+--------+------|  |--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+-------|
         XXXXXXX, LSG(KC_4),   LCSG(KC_4),    MS_BTN2,       MS_BTN1,       MS_BTN3,       XXXXXXX,                  XXXXXXX,      MS_LEFT,       MS_DOWN,       MS_UP,          MS_RGHT,       XXXXXXX,        XXXXXXX,
         //|--------+--------+--------+--------+--------+--------+-------+--------+--------+--------+------|  |--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+-------|
-        XXXXXXX, KC_F13,      KC_F14,        KC_F15,        KC_F16,        KC_F17,                                                KC_F18,        KC_F19,        KC_F20,         KC_F21,        KC_F22,         XXXXXXX,
+        XXXXXXX, MAIL1_MACRO,  MAIL2_MACRO,  KC_F13,        KC_F14,        KC_F15,                                                KC_F16,        KC_F17,        KC_F18,         KC_F19,        KC_F20,         XXXXXXX,
         //|--------+--------+--------+--------+--------+--------+-------+--------+--------+--------+------|  |--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+-------|
                                               _______,       _______,      _______,                                       _______,       _______,       _______
         //                              `-----------------------------------------------------------------'  `-----------------------------------------------------------------'
@@ -87,6 +88,21 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
     if (!process_shifted_modtap_keys(keycode, record)) {
         return false;
+    }
+
+    switch (keycode) {
+        case MAIL1_MACRO:
+            if (record->event.pressed) {
+                SEND_STRING(EMAIL_ADDRESS1);
+            }
+            return false;
+        case MAIL2_MACRO:
+            if (record->event.pressed) {
+                SEND_STRING(EMAIL_ADDRESS2);
+            }
+            return false;
+        default:
+            break;
     }
 
     return true;
